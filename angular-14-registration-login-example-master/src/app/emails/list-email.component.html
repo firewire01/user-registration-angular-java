@@ -1,0 +1,26 @@
+﻿<h1>Emails</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 15%">Email</th>
+            <th style="width: 15%">Type</th>
+            <th style="width: 15%">Status</th>
+            <th style="width: 30%">Sent</th>
+            <th style="width: 30%">Last Updated</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let email of emails">
+            <td>{{email.email}}</td>
+            <td>{{email.emailType}}</td>
+            <td>{{email.status}}</td>
+            <td>{{email.sendDate | date : 'medium'}}</td>
+            <td>{{email.lastUpdateDate | date : 'medium'}}</td>
+        </tr>
+        <tr *ngIf="!emails">
+            <td colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
