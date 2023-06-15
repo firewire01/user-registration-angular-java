@@ -10,14 +10,14 @@ services:
       context: java # Use an image built from the specified dockerfile in the `java` directory.
       dockerfile: Dockerfile
     ports:
-      - "8081:8081" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
     restart: always
     depends_on: 
       - db # This service depends on mysql. Start that first.
     environment: # Pass environment variables to the service
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/demo?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: javachinna
-      SPRING_DATASOURCE_PASSWORD: javachinna     
+      SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD:      
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
       - backend
       - frontend
@@ -25,10 +25,10 @@ services:
   # Frontend Service 
   app-client:
     build:
-      context: angular-11-social-login # Use an image built from the specified dockerfile in the `angular-11-social-login` directory.
+      context: angular-14-registration-login-example-master # Use an image built from the specified dockerfile in the `angular-11-social-login` directory.
       dockerfile: Dockerfile
     ports:
-      - "8081:80" # Map the exposed port 80 on the container to port 8081 on the host machine
+      - "4282:4200" # Map the exposed port 80 on the container to port 8081 on the host machine
     restart: always
     depends_on:
       - app-server
