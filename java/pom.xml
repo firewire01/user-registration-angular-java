@@ -18,6 +18,16 @@
 		<map.struct.version>1.4.2.Final</map.struct.version>
 		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
 		<maven.compiler.plugin.version>3.5</maven.compiler.plugin.version>
+		<javax.mail.version>1.4.7</javax.mail.version>
+		<javax.mail.api.version>2.0.1</javax.mail.api.version>
+		<javax.sun.mail.version>2.0.1</javax.sun.mail.version>
+		<simple.java.mail.version>8.1.1</simple.java.mail.version>
+		<simple.java.mail.module.version>8.1.1</simple.java.mail.module.version>
+		<io.jsonwebtoken.version>0.11.5</io.jsonwebtoken.version>
+		<io.jsonwebtoken.impl.version>0.11.5</io.jsonwebtoken.impl.version>
+		<io.jsonwebtoken.jackson.version>0.11.5</io.jsonwebtoken.jackson.version>
+		<org.springdoc.version>2.0.3</org.springdoc.version>
+		<spring.context.support.version>5.2.8.RELEASE</spring.context.support.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -40,29 +50,29 @@
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
-			<version>1.4.7</version>
+			<version>${javax.mail.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>jakarta.mail</groupId>
 			<artifactId>jakarta.mail-api</artifactId>
-			<version>2.0.1</version>
+			<version>${javax.mail.api.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.mail</groupId>
 			<artifactId>jakarta.mail</artifactId>
-			<version>2.0.1</version>
+			<version>${javax.sun.mail.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.simplejavamail</groupId>
 			<artifactId>simple-java-mail</artifactId>
-			<version>8.1.1</version>
+			<version>${simple.java.mail.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.simplejavamail</groupId>
 			<artifactId>smime-module</artifactId>
-			<version>8.1.1</version>
+			<version>${simple.java.mail.module.version}</version>
 		</dependency>
 
 		<dependency>
@@ -79,20 +89,20 @@
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
-			<version>0.11.5</version>
+			<version>${io.jsonwebtoken.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-impl</artifactId>
-			<version>0.11.5</version>
+			<version>${io.jsonwebtoken.impl.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-jackson</artifactId>
-			<version>0.11.5</version>
+			<version>${io.jsonwebtoken.jackson.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 
@@ -119,7 +129,7 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.0.3</version>
+			<version>${org.springdoc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
@@ -128,7 +138,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>5.2.8.RELEASE</version>
+			<version>${spring.context.support.version}</version>
 		</dependency>
 
 	</dependencies>
