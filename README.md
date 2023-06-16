@@ -1,5 +1,5 @@
 # user-registration-angular-java
-This is will register user via spring boot and angular implementation
+This is will register user via spring boot and angular implementation, notes this a H2DB might will be lost data for a couple hours in ur system. and auth and cors could be broken. needs restart.
 # how run
 clone this repo "clone https://github.com/firewire01/user-registration-angular-java.git" 
 You can run it either separetely or join by docker compose
