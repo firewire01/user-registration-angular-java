@@ -1,17 +1,4 @@
-FROM eclipse-temurin:17-jdk-jammy
-
-WORKDIR /app
-
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-RUN ./mvnw dependency:resolve
-
-COPY src ./src
-
-CMD ["./mvnw", "spring-boot:run"]
-
-#### Stage 1: Build the application
-FROM eclipse-temurin:17-jdk-jammy as build
+FROM openjdk:17-alpine AS build
 
 # Set the current working directory inside the image
 WORKDIR /app
@@ -23,8 +10,8 @@ COPY .mvn .mvn
 # Copy the pom.xml file
 COPY pom.xml .
 
-# Build all the dependencies in preparation to go offline. 
-# This is a separate step so the dependencies will be cached unless 
+# Build all the dependencies in preparation to go offline.
+# This is a separate step so the dependencies will be cached unless
 # the pom.xml file has changed.
 RUN ./mvnw dependency:go-offline -B
 
@@ -35,8 +22,8 @@ COPY src src
 RUN ./mvnw package -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
-#### Stage 2: A minimal docker image with command to run the app 
-FROM eclipse-temurin:17-jdk-jammy
+#### Stage 2: A minimal docker image with command to run the app
+FROM openjdk:17-alpine
 
 ARG DEPENDENCY=/app/target/dependency
 

@@ -124,12 +124,25 @@ public class UserServiceImp implements UserService {
 		}
 		List<User> emails = userRepository.findAllByEmail(userRequest.getEmail());
 
+		//check if the email is unique
 		if (emails.size() > NumberUtils.LONG_ZERO) {
 			if (!emails.stream().anyMatch(user1 -> user1.getId().equals(id))) {
 				throw new ResponseStatusException(
 					HttpStatus.BAD_REQUEST,
 					"Email [".concat(String.valueOf(userRequest.getEmail()))
 						.concat("] already exist")
+				);
+			}
+		}
+
+		List<UserCredentials> credentials = userCredentialsRepository.findAllByUserName(userRequest.getUserName());
+		//check if the username is unique
+		if (credentials.size() > NumberUtils.LONG_ZERO) {
+			if (!credentials.stream().anyMatch(cred -> cred.getId().equals(id))) {
+				throw new ResponseStatusException(
+						HttpStatus.BAD_REQUEST,
+						"Username [".concat(String.valueOf(credentials.get(0).getUserName()))
+								.concat("] already exist")
 				);
 			}
 		}

@@ -37,7 +37,8 @@ public class MainApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry
 					.addMapping("/**")
-					.allowedOrigins("http://localhost:4200")
+					.allowedOrigins("http://localhost:8081", "http://localhost:4200",
+							"http://localhost:80")
 					.allowedMethods("*")
 					.maxAge(3600L)
 					.allowedHeaders("*")
