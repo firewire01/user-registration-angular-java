@@ -17,3 +17,4 @@ You can run it either separetely or join by docker compose
 #### Notes: make sure you properlly installed docker and docker compose 
 > ref: https://docs.docker.com/desktop/install/windows-install/
 #### The joined application is map in  http://localhost:8081 there you can access the UI directly
+[![image](https://github.com/firewire01/user-registration-angular-java/assets/6559144/182be1a3-ba2b-46a0-9376-0f15390df6b1)]
