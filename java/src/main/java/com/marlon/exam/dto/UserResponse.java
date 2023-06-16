@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.marlon.exam.model.constants.ERole;
 import com.marlon.exam.model.constants.Gender;
 import com.marlon.exam.model.constants.UserStatus;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

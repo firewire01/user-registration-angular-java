@@ -2,8 +2,9 @@ package com.marlon.exam.mapper;
 
 import com.marlon.exam.dto.EmailResponse;
 import com.marlon.exam.model.Email;
-import java.util.List;
 import org.mapstruct.Mapper;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface EmailMapper {

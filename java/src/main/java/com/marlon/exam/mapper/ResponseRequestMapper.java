@@ -1,7 +1,11 @@
 package com.marlon.exam.mapper;
 
+import org.mapstruct.BeanMapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+
 import java.util.List;
-import org.mapstruct.*;
 
 public interface ResponseRequestMapper<R, S, E> {
 	R toResponse(E entity);

@@ -36,13 +36,16 @@ public class EmailServiceImp implements EmailService {
 
 	@Override
 	public void sendRegisterUser(User user) {
+		String first = String.valueOf(user.getFirstName());
+		String last = String.valueOf(user.getLastName());
 		String subject =
-			"Welcome ".concat(user.getFirstName()).concat(" ").concat(user.getLastName());
+				"Welcome ".concat(first
+				).concat(" ").concat(last);
 		String body =
-			"Hi ".concat(user.getFirstName())
-				.concat(" ")
-				.concat(user.getLastName())
-				.concat(" Welcome to the our site!");
+				"Hi ".concat(first)
+						.concat(" ")
+						.concat(last)
+						.concat(" Welcome to the our site!");
 		sendEmail(user.getEmail(), subject, body);
 	}
 

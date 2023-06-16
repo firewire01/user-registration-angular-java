@@ -99,7 +99,7 @@ public class UserController extends BaseController {
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema) }),
 		}
 	)
-	@PutMapping("/user/{id}/update-credentials/")
+	@PutMapping("/user/{id}/update-credentials")
 	public ResponseEntity<UserResponse> updateUserCreds(
 		@PathVariable Long id,
 		@RequestBody LoginRequest loginRequest

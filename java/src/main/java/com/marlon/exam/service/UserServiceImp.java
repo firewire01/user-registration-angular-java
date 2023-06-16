@@ -102,49 +102,63 @@ public class UserServiceImp implements UserService {
 				"Email [".concat(userRequest.getEmail()).concat("] already exist")
 			);
 		}
-	}
-
-	@Override
-	public UserResponse update(Long id, UserRequest userRequest) {
-		validateUser(id, userRequest);
-
-		User user = userRepository.findById(id).get();
-
-		userMapper.partialUpdate(user, userRequest);
-
-		return userMapper.toResponse(Optional.ofNullable(userRepository.save(user)).get());
-	}
-
-	private void validateUser(Long id, UserRequest userRequest) {
-		if (!userRepository.existsById(id)) {
-			throw new ResponseStatusException(
-				HttpStatus.NOT_FOUND,
-				"User id [".concat(String.valueOf(id)).concat("]")
-			);
-		}
-		List<User> emails = userRepository.findAllByEmail(userRequest.getEmail());
-
-		//check if the email is unique
-		if (emails.size() > NumberUtils.LONG_ZERO) {
-			if (!emails.stream().anyMatch(user1 -> user1.getId().equals(id))) {
-				throw new ResponseStatusException(
-					HttpStatus.BAD_REQUEST,
-					"Email [".concat(String.valueOf(userRequest.getEmail()))
-						.concat("] already exist")
-				);
-			}
-		}
 
 		List<UserCredentials> credentials = userCredentialsRepository.findAllByUserName(userRequest.getUserName());
 		//check if the username is unique
 		if (credentials.size() > NumberUtils.LONG_ZERO) {
-			if (!credentials.stream().anyMatch(cred -> cred.getId().equals(id))) {
 				throw new ResponseStatusException(
 						HttpStatus.BAD_REQUEST,
 						"Username [".concat(String.valueOf(credentials.get(0).getUserName()))
 								.concat("] already exist")
 				);
-			}
+		}
+	}
+
+	@Override
+	public UserResponse update(Long id, UserRequest userRequest) {
+
+		User user = userRepository.findById(id).orElseThrow(() ->
+				new ResponseStatusException(
+						HttpStatus.NOT_FOUND,
+						"User id [".concat(
+										String.valueOf(id)
+								)
+								.concat("]")
+				)
+		);
+
+		validateUser(id, userRequest, user);
+
+		userMapper.partialUpdate(user, userRequest);
+
+		return userMapper.toResponse(userRepository.save(user));
+	}
+
+	private void validateUser(Long id, UserRequest userRequest, User user) {
+		List<User> emails = userRepository.findAllByEmail(userRequest.getEmail());
+
+		emails.removeIf(user1 -> user1.getId().equals(id));
+		//check if the email is unique
+		if (emails.size() > NumberUtils.LONG_ZERO) {
+				throw new ResponseStatusException(
+					HttpStatus.BAD_REQUEST,
+					"Email [".concat(String.valueOf(userRequest.getEmail()))
+						.concat("] already exist")
+				);
+		}
+
+		List<UserCredentials> credentials = userCredentialsRepository
+				.findAllByUserName(userRequest.getUserName());
+
+		credentials.removeIf(userCredentials -> userCredentials.getUserName()
+				.equals(user.getId()));
+
+		//check if the username is unique
+		if (credentials.size() > NumberUtils.LONG_ZERO) {
+			throw new ResponseStatusException(
+						HttpStatus.BAD_REQUEST,
+						"Username [".concat(String.valueOf(credentials.get(0).getUserName()))
+								.concat("] already exist"));
 		}
 	}
 
@@ -207,6 +221,11 @@ public class UserServiceImp implements UserService {
 
 		user.setStatus(UserStatus.REMOVED);
 
+		UserCredentials userCredentials = userCredentialsRepository.findById(user.getUserCredentials().getId())
+				.get();
+
+		userCredentials.setStatus(UserCredentialStatus.DEACTIVATED);
+
 		userRepository.save(user);
 	}
 
@@ -235,14 +254,13 @@ public class UserServiceImp implements UserService {
 		return userCredentialsRepository
 			.findByUserName(userName)
 			.map(userCredentials ->
-				userRepository.findByUserCredentialsId(userCredentials.getId()).get()
-			)
-			.orElseThrow(() ->
-				new ResponseStatusException(
-					HttpStatus.BAD_REQUEST,
-					"Cant get username [".concat(userName).concat("] in the system.")
+				userRepository.findByUserCredentialsId(userCredentials.getId()).orElseThrow(() ->
+						new ResponseStatusException(
+								HttpStatus.BAD_REQUEST,
+								"Cant get username [".concat(userName).concat("] in the system.")
+						)
 				)
-			);
+			).get();
 	}
 
 	@Override
@@ -283,7 +301,7 @@ public class UserServiceImp implements UserService {
 			);
 
 		userCredentials.setUserName(loginRequest.getUserName());
-		userCredentials.setUserName(loginRequest.getPassword());
+		userCredentials.setPassword(loginRequest.getPassword());
 		userCredentials = userCredentialsRepository.save(userCredentials);
 
 		response.setUserName(userCredentials.getUserName());

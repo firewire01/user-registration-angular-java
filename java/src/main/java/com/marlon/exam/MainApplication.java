@@ -7,14 +7,7 @@ import com.marlon.exam.model.constants.*;
 import com.marlon.exam.repo.EmailRepository;
 import com.marlon.exam.repo.UserCredentialsRepository;
 import com.marlon.exam.repo.UserRepository;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
-import java.util.stream.Stream;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,6 +15,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Stream;
 
 @SpringBootApplication
 public class MainApplication {

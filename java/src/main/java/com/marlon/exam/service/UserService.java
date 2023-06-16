@@ -5,6 +5,7 @@ import com.marlon.exam.dto.UserRequest;
 import com.marlon.exam.dto.UserResponse;
 import com.marlon.exam.model.User;
 import com.marlon.exam.model.UserCredentials;
+
 import java.util.List;
 
 public interface UserService {

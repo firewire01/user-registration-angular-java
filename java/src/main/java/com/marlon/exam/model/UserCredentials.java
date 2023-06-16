@@ -20,7 +20,7 @@ public class UserCredentials {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "user_name")
+	@Column(name = "user_name", unique = true)
 	@NotBlank
 	@Size(max = 20)
 	private String userName;
