@@ -6,6 +6,7 @@ import com.marlon.exam.dto.LoginRequest;
 import com.marlon.exam.dto.UserResponse;
 import com.marlon.exam.model.User;
 import com.marlon.exam.model.UserCredentials;
+import com.marlon.exam.model.constants.UserStatus;
 import com.marlon.exam.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,12 +24,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
 @Tag(name = "Authentication", description = "Authentication management APIs")
 public class AuthController extends BaseController {
 
@@ -54,7 +55,7 @@ public class AuthController extends BaseController {
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema) }),
 		}
 	)
-	@PostMapping("/sign-in")
+	@PostMapping("/auth/sign-in")
 	public ResponseEntity<?> authenticateUser(
 		@Valid @RequestBody LoginRequest loginRequest
 	) {
@@ -73,6 +74,11 @@ public class AuthController extends BaseController {
 			userDetails.getUsername()
 		);
 		User user = userService.getByUsername(userDetails.getUsername());
+
+		if(user.getStatus().equals(UserStatus.REMOVED)){
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+					"User is already deleted.");
+		}
 
 		return ResponseEntity.ok(
 			new UserResponse()

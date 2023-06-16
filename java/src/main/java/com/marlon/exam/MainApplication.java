@@ -37,7 +37,7 @@ public class MainApplication {
 				registry
 					.addMapping("/**")
 					.allowedOrigins("http://localhost:8081", "http://localhost:4200",
-							"http://localhost:80")
+							"http://localhost:80", "http://localhost:8080")
 					.allowedMethods("*")
 					.maxAge(3600L)
 					.allowedHeaders("*")

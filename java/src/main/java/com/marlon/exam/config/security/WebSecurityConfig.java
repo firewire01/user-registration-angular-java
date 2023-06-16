@@ -49,7 +49,6 @@ public class WebSecurityConfig {
 
 		return authProvider;
 	}
-
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
@@ -62,10 +61,12 @@ public class WebSecurityConfig {
 			)
 			.authorizeHttpRequests(auth ->
 				auth
-					.requestMatchers("/auth/**")
+					.requestMatchers("/api/auth/**")
 					.permitAll()
 					.requestMatchers("/api/user/signup")
 					.permitAll()
+						.requestMatchers("/api/emails/**")
+						.permitAll()
 					.requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**")
 					.permitAll()
 					.anyRequest()
