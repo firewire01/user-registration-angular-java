@@ -63,7 +63,7 @@ public class WebSecurityConfig {
 				auth
 					.requestMatchers("/api/auth/**")
 					.permitAll()
-					.requestMatchers("/api/user/signup")
+					.requestMatchers("/api/user/**")
 					.permitAll()
 						.requestMatchers("/api/emails/**")
 						.permitAll()
